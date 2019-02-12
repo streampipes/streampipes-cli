@@ -7,8 +7,6 @@ backend
 nginx
 connect-master
 connect-worker
-jobmanager
-taskmanager
 kafka-rest
 sinks-internal-jvm
 sources-random-data-generator
