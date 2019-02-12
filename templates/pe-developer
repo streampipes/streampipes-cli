@@ -9,5 +9,6 @@ connect-master
 connect-worker
 kafka-rest
 sinks-internal-jvm
-sources-random-data-generator
+sources-vehicle-simulator
+sources-watertank-simulator
 processors-transformation-jvm
