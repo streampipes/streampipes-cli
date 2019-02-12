@@ -2,9 +2,26 @@ variables:
   REGISTRY_HOST: ipe-wim-gitlab.fzi.de:5000
   IMAGE_NAME: $REGISTRY_HOST/$CI_PROJECT_PATH
   MAVEN_CLI_OPTS: -DskipTests --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
+  GIT_REPO_ORIGIN: ssh://git@ipe-wim-gitlab.fzi.de:2222
+  GIT_STRATEGY: clone
+
 
 stages:
   - gen-script
+  - github
+
+github:
+  image: maven:3-jdk-8
+  stage: github
+  script:
+    - git config --global user.email 'zehnder@fzi.de'
+    - git config --global user.name 'zehnder'
+    - git checkout $CI_COMMIT_REF_NAME
+    - git pull
+    - git remote add github https://$GITHUB_TOKEN:x-oauth-basic@github.com/streampipes/streampipes-cli.git
+    - git push github $CI_COMMIT_REF_NAME
+  only:
+    - master
 
 generate bash script:
   image: docker:17.06.0-ce
